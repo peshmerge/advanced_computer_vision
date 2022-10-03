@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../../REDI/GAP/REDI-PROJECT/.idea/REDI-PROJECT.iml" filepath="$PROJECT_DIR$/../../../REDI/GAP/REDI-PROJECT/.idea/REDI-PROJECT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/advanced_computer_vision.iml" filepath="$PROJECT_DIR$/.idea/advanced_computer_vision.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../Quantum_Computing/project/quantum-SVM/.idea/quantum-SVM.iml" filepath="$PROJECT_DIR$/../../../Quantum_Computing/project/quantum-SVM/.idea/quantum-SVM.iml" />
+    </modules>
+  </component>
+</project>
