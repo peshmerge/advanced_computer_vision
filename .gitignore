@@ -131,3 +131,4 @@ dmypy.json
 # data directory
 data/
 ego4d_setup/
+.DS_Store
