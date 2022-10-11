@@ -43,9 +43,9 @@ class DataGenerator(tf.keras.utils.Sequence):
 			if self.load_video:
 				self.load_as_video(ID, X, y)
 			else:
-				X[i,] = np.load(ID)
+				X.append(np.load(ID))
 				# Store class
-				y[i] = self.labels[ID]
+				y.append(self.labels[ID])
 
 		return np.asarray(X), tf.keras.utils.to_categorical(np.array(y), num_classes=self.n_classes)
 
