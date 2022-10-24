@@ -1,9 +1,9 @@
 import numpy as np
 import tensorflow as tf
-from frames_extractor import video
+
 class DataGenerator(tf.keras.utils.Sequence):
 	'Generates data for Keras'
-	def __init__(self, list_IDs, labels, load_video=False, batch_size=250, sequence_length=30, n_classes=7, min_duration=150, shuffle=True):
+	def __init__(self, list_IDs, labels, batch_size=250, sequence_length=30, n_classes=7, min_duration=150, shuffle=True):
 		'''
 		Generates data for Keras for our ego4D dataset.
 		Args:
@@ -18,7 +18,6 @@ class DataGenerator(tf.keras.utils.Sequence):
 		self.batch_size = batch_size
 		self.list_IDs = list_IDs
 		self.labels = labels
-		self.load_video = load_video
 		self.sequence_length = sequence_length
 		self.min_duration = min_duration
 		self.n_classes = n_classes
@@ -40,12 +39,12 @@ class DataGenerator(tf.keras.utils.Sequence):
 
 		# Generate data
 		for i, ID in enumerate(list_IDs_temp):
-			if self.load_video:
-				self.load_as_video(ID, X, y)
-			else:
-				X.append(np.load(ID))
-				# Store class
-				y.append(self.labels[ID])
+			# if self.load_video:
+			# 	self.load_as_video(ID, X, y)
+			# else:
+			X.append(np.load(ID))
+			# Store class
+			y.append(self.labels[ID])
 
 		return np.asarray(X), tf.keras.utils.to_categorical(np.array(y), num_classes=self.n_classes)
 
@@ -66,11 +65,11 @@ class DataGenerator(tf.keras.utils.Sequence):
 
 		return X, y
 	
-	def load_as_video(self, ID, X, y):
-		vid = video(ID, self.sequence_length, self.min_duration)
-		frames = vid.frames_extraction(ID)
-		# Check if the extracted frames are equal to the SEQUENCE_LENGTH specified above.
-		# Append the data to their repective lists.
-		for i in range(0, len(frames), self.sequence_length):
-			X.append(frames[i:i+self.sequence_length])
-			y.append(self.labels[ID])
+	# def load_as_video(self, ID, X, y):
+	# 	vid = video(ID, self.sequence_length, self.min_duration)
+	# 	frames = vid.frames_extraction(ID)
+	# 	# Check if the extracted frames are equal to the SEQUENCE_LENGTH specified above.
+	# 	# Append the data to their repective lists.
+	# 	for i in range(0, len(frames), self.sequence_length):
+	# 		X.append(frames[i:i+self.sequence_length])
+	# 		y.append(self.labels[ID])
