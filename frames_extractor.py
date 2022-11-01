@@ -11,7 +11,7 @@ class video():
 		if duration <= self.min_duration: return self.sequence_length
 		return self.sequence_length + self.get_no_of_sequences(duration - self.min_duration)
 
-	def frames_extraction(self, video_path):
+	def frames_extraction(self):
 		'''
 		This function will extract the required frames from a resized video, and then normalize them.
 		Args:
@@ -24,7 +24,7 @@ class video():
 		frames_list = []
 		
 		# Read the Video File using the VideoCapture object.
-		video_reader = cv2.VideoCapture(video_path)
+		video_reader = cv2.VideoCapture(self.video_path)
 
 		fps = video_reader.get(cv2.CAP_PROP_FPS)
 		frame_count = int(video_reader.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -35,25 +35,30 @@ class video():
 
 		skip_frames_window = max(int(frame_count/sequence_len), 1)
 
-		# Iterate through the Video Frames.
-		for frame_counter in range(sequence_len):
-			# Set the current frame position of the video.
-			video_reader.set(cv2.CAP_PROP_POS_FRAMES, frame_counter * skip_frames_window)
+		frame_counter = 0
 
+		# Iterate through every single frame and sequence read rather than random access
+		for frame_num in range(frame_count):
+			if frame_counter == sequence_len: break
+			if frame_num % skip_frames_window != 0:
+				success, frame = video_reader.read()
+				continue
+					
 			# Reading the frame from the video. 
 			success, frame = video_reader.read() 
 
 			# Check if Video frame is not successfully read then break the loop
 			if not success:
 				break
-			
+				
 			# Normalize the frame by dividing it with 255 so that each pixel value then lies between 0 and 1
 			normalized_frame = frame / 255
-			
+				
 			# Append the normalized frame into the frames list
 			frames_list.append(normalized_frame)
-		
-		# Release the VideoCapture object. 
+
+			frame_counter += 1
+			
 		video_reader.release()
 
 		# Return the frames list.
