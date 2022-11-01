@@ -5,7 +5,6 @@ class video():
 		self.video_path = video_path
 		self.sequence_length = sequence_length
 		self.min_duration = min_duration
-		self.frames_list = self.frames_extraction(video_path)
 
 	def get_no_of_sequences(self, duration):
 		'Function to extract frames from a video, as multiples of `sequence_length` and calculated based on the video length'
