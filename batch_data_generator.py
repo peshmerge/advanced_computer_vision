@@ -42,7 +42,10 @@ class DataGenerator(tf.keras.utils.Sequence):
 			# if self.load_video:
 			# 	self.load_as_video(ID, X, y)
 			# else:
-			X.append(np.load(ID))
+			frame_data = np.load(ID)
+			from keras.applications.vgg16 import preprocess_input
+			frame_data = preprocess_input(frame_data * 255)
+			X.append(frame_data)
 			# Store class
 			y.append(self.labels[ID])
 
