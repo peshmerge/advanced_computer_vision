@@ -133,3 +133,4 @@ data/videos/
 data/video_clips/
 ego4d_setup/
 .DS_Store
+models/*.h5
