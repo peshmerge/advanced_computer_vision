@@ -51,11 +51,8 @@ class video():
 			if not success:
 				break
 				
-			# Normalize the frame by dividing it with 255 so that each pixel value then lies between 0 and 1
-			normalized_frame = frame / 255
-				
 			# Append the normalized frame into the frames list
-			frames_list.append(normalized_frame)
+			frames_list.append(frame)
 
 			frame_counter += 1
 			

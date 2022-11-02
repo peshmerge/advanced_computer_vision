@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from keras.applications.vgg16 import preprocess_input
 
 class DataGenerator(tf.keras.utils.Sequence):
 	'Generates data for Keras'
@@ -39,12 +40,10 @@ class DataGenerator(tf.keras.utils.Sequence):
 
 		# Generate data
 		for i, ID in enumerate(list_IDs_temp):
-			# if self.load_video:
-			# 	self.load_as_video(ID, X, y)
-			# else:
 			frame_data = np.load(ID)
-			from keras.applications.vgg16 import preprocess_input
-			frame_data = preprocess_input(frame_data * 255)
+			# pre-process the frames for VGG16 input
+			frame_data = frame_data/127.5
+			frame_data -= 1.
 			X.append(frame_data)
 			# Store class
 			y.append(self.labels[ID])
@@ -67,12 +66,3 @@ class DataGenerator(tf.keras.utils.Sequence):
 		X, y = self.__data_generation(list_IDs_temp)
 
 		return X, y
-	
-	# def load_as_video(self, ID, X, y):
-	# 	vid = video(ID, self.sequence_length, self.min_duration)
-	# 	frames = vid.frames_extraction(ID)
-	# 	# Check if the extracted frames are equal to the SEQUENCE_LENGTH specified above.
-	# 	# Append the data to their repective lists.
-	# 	for i in range(0, len(frames), self.sequence_length):
-	# 		X.append(frames[i:i+self.sequence_length])
-	# 		y.append(self.labels[ID])
